@@ -1,0 +1,336 @@
+/*---------Start of tags style*/
+body{
+  color: #555555;
+  max-width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+h2{
+  float: left;
+  width: 40%;
+  margin: 0;
+  font: normal 150% 'century gothic', "Times New Roman", sans-serif;
+}
+h3{
+  float: left;
+  margin: 0;
+  font: bold 110% 'century gothic', "Times New Roman", sans-serif;
+}
+form{
+  display: flex;
+  justify-content: flex-end;
+}
+input[type="text"]{
+  background-color: #e4e4e4;
+  border-radius: 2px;
+  border: 0px;
+  padding: 10px;
+  width: 160px;
+  color: black;
+  margin-right: 20px;
+}
+input[type="image"]{
+  width: 35px;
+  height: 35px;
+  border-radius: 45%;
+
+}
+img{
+  width: 35px;
+  height: 35px;
+  border-radius: 35%;
+}
+
+/*---------End of style tags*/
+
+
+/*---------Header*/
+header{
+  height: 12%;
+  width: 100%;
+}
+
+header h1{
+  float: left;
+  font: normal 170% 'century gothic', "Times New Roman", sans-serif;
+  width: 40%;
+  margin: 0;
+
+}
+#button-mobile{
+  display: none;
+}
+header button{
+  display: block;
+  font-size: 0.5em;
+  margin-right: auto;
+  border-radius: 5px;
+  padding: 1%;
+  width: 23%;
+  height: 30px;
+  cursor: pointer;
+}
+/*---------End Header*/
+
+main{
+  /*background-color: darkseagreen;*/
+  margin-top: 3%;
+
+}
+/*---------Main_City*/
+
+#main_city{
+  display: -webkit-flex;
+  display: flex;
+  margin-bottom: 2%;
+
+}
+
+#load_main{
+  font: normal 200% 'century gothic', "Times New Roman", sans-serif;
+
+}
+.load{
+  font: normal 150% 'century gothic', "Times New Roman", sans-serif;
+  border-radius: 2%;
+  background-color: #e4e4e4;
+  text-align: center;
+}
+
+/*first_block*/
+.first{
+  width: 48%;
+  margin-right: 2%;
+}
+.first h2{
+  font: bold 170% 'century gothic', "Times New Roman", sans-serif;
+  width: 100%;
+  margin: 1%;
+  margin-bottom: 5%;
+}
+.first img{
+  float: left;
+  width: 75px;
+  height: auto;
+  border-radius: 35%;
+}
+.first p{
+  padding-top: 22px;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+/*second_block*/
+.second{
+  width: 48%;
+  margin-right: 0;
+  margin-left: 2%;
+}
+
+ul.weather{
+  display: block;
+  border: black;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+ul.weather li{
+  list-style: none;
+  margin: 3px 0 3px 0;
+  padding: 2%;
+  border-radius: 3%;
+  background-color: lightgray;
+  color: white;
+}
+ul.weather span{
+  float: right;
+}
+/*---------End main city*/
+
+
+
+/*---------Favorites*/
+.favorites{
+  margin-top: 3%;
+}
+
+ul.menu{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: black;
+  margin: 3% 0 0 0;
+  padding: 0;
+}
+ul.menu li.city{
+  list-style: none;
+  margin-top: 2%;
+  width:45%;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.flex h3{
+  margin-top:auto;
+  margin-bottom: auto;
+}
+
+
+.flex p{
+  font-size: 1.3em;
+  margin-top:auto;
+  margin-bottom: auto;
+}
+.flex img{
+  width: 50px;
+  height: 50px;
+}
+
+.flex button{
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0px;
+  border-radius: 45%;
+  margin-left: 15%;
+  margin-top:auto;
+  margin-bottom: auto;
+}
+.delete img{
+  width: 30px;
+  height: 100%;
+  text-align: center;
+  margin: 0;
+  border-radius: 45%;
+}
+
+
+/*---------End Favorites*/
+
+
+
+
+
+/* --------------------------------------CSS Mobile--------------------------------- */
+@media only screen and (min-width: 320px) and (max-width: 500px) {
+
+  /*Start of tags style*/
+  body{
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  h2{
+    float: none;
+  }
+  form{
+    display: flex;
+    justify-content: space-between;
+  }
+  input[type="text"]{
+    width: 80%;
+    margin-right: 2%;
+  }
+  input[type="image"]{
+    width: 30px;
+    height: 30px;
+
+  }
+  /*End of style tags*/
+
+
+  /*Header*/
+  header{
+    min-width: 100%;
+    height: 40px;
+  }
+
+  header h1{
+    float: left;
+    font: normal 150% 'century gothic', "Times New Roman", sans-serif;
+    width: 50%;
+    margin: 0;
+    padding-top: 2%;
+  }
+
+  #button-mobile{
+    display: block;
+  }
+  #button-desktop{
+    display: none;
+  }
+  header button{
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 25%;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+  }
+  header img{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0;
+  }
+  /*End Header*/
+
+
+  /*Main_City*/
+  #main_city{
+    display: block;
+  }
+  .first{
+    width: 100%;
+    margin: 0;
+  }
+  .first h2{
+    margin-bottom: 2%;
+  }
+  .first img{
+    width: 100px;
+    height: 100px;
+    margin-right: 0;
+  }
+  .first p{
+    margin: 7px 0 10% 0;
+    padding-bottom: 7px;
+    font-size: 2.9em;
+  }
+
+
+  .second{
+    width: 100%;
+    margin: 0;
+  }
+
+  /*End main city*/
+
+
+  /*Favorites*/
+  .favorites{
+    display: block;
+  }
+  ul.menu{
+    display: block;
+    margin-top: 5%;
+  }
+  ul.menu li.city{
+    width: 100%;
+  }
+  .flex button{
+    margin-left: 25%;
+  }
+
+  .load{
+    height: 70px;
+  }
+
+  /*End Favorites*/
+
+}
+

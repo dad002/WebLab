@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Погода</title>
+</head>
+<body>
+
+<header>
+  <h1>Погода здесь</h1>
+  <button id="button-desktop">обновить геолокацию</button>
+  <button id="button-mobile"><img src="img/update.png" alt=""></button>
+</header>
+<main>
+
+  <div id="main_city">
+    <div id="load_main">Подождите данные загружаются...</div>
+    <div hidden class="first">
+      <h2>Название города</h2>
+      <div class="weather__icon">Картинка</div>
+      <p>Температура</p>
+    </div>
+    <div hidden class="second">
+      <ul class="weather">
+        <li>Ветер <span class="wind">скорость ветра</span></li>
+        <li>Облачность <span class="cloud">облака</span></li>
+        <li>Давление <span class="pressure">сила давления</span></li>
+        <li>Влажность <span class="humidity">% влажности</span></li>
+        <li>Координаты <span class="coord">координаты города</span></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="favorites">
+    <h2>Избранное</h2>
+    <form id="form">
+      <input id="POST-name" type="text" name="add_city" required placeholder="Добавить новый город">
+      <input id="POST-button" type="image" name="btn" src="img/plus.png">
+    </form>
+
+      <ul class="menu"></ul>
+
+  </div>
+  <script src="js/script.js"></script>
+  <script src="js/favorites.js"></script>
+</main>
+
+</body>
+</html>
