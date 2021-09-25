@@ -1,6 +1,9 @@
 /*---------------------------------------------------    Избранное      ---------------------------------------------------*/
 
 var favorites = window.localStorage;
+
+var mainData = {}
+
 const KEY = '752f990ab071528a352306f302bca0aa';
 
 /*-------- Добавление --------*/
@@ -8,13 +11,45 @@ let Form = document.getElementById('form');
 Form.addEventListener("submit", function (event){
 
     event.preventDefault();
+
     let name = document.getElementById('POST-name');
-    favorites.setItem(name.value.toLowerCase(), name.value);
-    name.value = "";
-    loadStorage();
+
+    let data = {
+        favorites: name.value.toLowerCase(),
+        key: KEY
+    }
+
+    addFavourite(data)
 
 });
 
+function addFavourite(data) {
+    let name = document.getElementById('POST-name');
+    fetch('/addFavourite', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+        .then(response => response.json())
+        .then(json => {
+            if (json.success) {
+
+                let data = json.res
+
+                if (mainData[data.name.toLowerCase()] === undefined) {
+                    mainData[data.name.toLowerCase()] = data
+
+                    loadStorage();
+                } else {
+                    alert(`Город ${name.value} уже выбран как избранный`);
+                }
+
+            } else {
+                alert(`Города ${name.value} нет в базе данных`);
+            }
+            name.value = "";
+        })
+}
 
 //Загрузка избранного
 function loadStorage(){
@@ -22,116 +57,25 @@ function loadStorage(){
     let favor = document.querySelector('.menu');
 
     //цикл очищения
-    while (favor.firstChild){
-        favor.removeChild(favor.lastChild)
-    }
+    favor.innerHTML = ''
 
     //Цикл заполнения
-    for (let i = 0; i < favorites.length; i++) {
-        let key = favorites.key(i);
-        fill(key, favor);
-    }
-}
-
-//Функция генерации элемента
-function genCityEl(data, key, favor) {
-    let city = document.createElement("li");
-    city.hidden = true;
-
-    let load = document.createElement('li');
-    load.classList.add('load', 'city');
-
-    let text = document.createElement('p');
-    load.append(text);
-    text.innerText = "Подождите данные загружаются...";
-    favor.append(load);
-
-    city.classList.add('city');
-
-    let head = document.createElement("div");
-    head.classList.add('flex');
-    city.appendChild(head);
-
-    let name = document.createElement("h3");
-    name.textContent = data.name;
-    let temp = document.createElement("p");
-    temp.textContent = data.main.temp + '°C';
-    let img = document.createElement("span");
-    img.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0]['icon']}@2x.png">`;
-    let btn = document.createElement("button");
-    btn.classList.add('delete');
-
-    // Функция удаления города
-    btn.addEventListener("click", () => {
-        delCity(load, city, key)
-    }, false);
-
-
-    btn.innerHTML =  `<img src="img/del.jpeg">`;
-
-    head.appendChild(name);
-    head.appendChild(temp);
-    head.appendChild(img);
-    head.appendChild(btn);
-
-
-    let data_city = document.createElement("ul");
-    data_city.classList.add('weather');
-    city.appendChild(data_city);
-
-    let wind_li = document.createElement("li");
-    wind_li.textContent = "Ветер";
-    data_city.appendChild(wind_li);
-    let wind_data_city = document.createElement('span');
-    wind_data_city.classList.add('wind');
-    wind_li.appendChild(wind_data_city);
-    wind_data_city.textContent = data.wind.speed + ' m/s';
-
-    let cloud_li = document.createElement("li");
-    cloud_li.textContent = "Облачность";
-    data_city.appendChild(cloud_li);
-    let cloud_data_city = document.createElement('span');
-    cloud_data_city.classList.add('cloud');
-    cloud_li.appendChild(cloud_data_city);
-    cloud_data_city.textContent = data.clouds.all + '%';
-
-    let pressure_li = document.createElement("li");
-    pressure_li.textContent = "Давление";
-    data_city.appendChild(pressure_li);
-    let pressure_data_city = document.createElement('span');
-    pressure_data_city.classList.add('pressure');
-    pressure_li.appendChild(pressure_data_city);
-    pressure_data_city.textContent = data.main.pressure + ' hpa';
-
-    let humidity_li = document.createElement("li");
-    humidity_li.textContent = "Влажность";
-    data_city.appendChild(humidity_li);
-    let humidity_data_city = document.createElement('span');
-    humidity_data_city.classList.add('humidity');
-    humidity_li.appendChild(humidity_data_city);
-    humidity_data_city.textContent = data.main.humidity +'%';
-
-    let coord_li = document.createElement("li");
-    coord_li.textContent = "Координаты";
-    data_city.appendChild(coord_li);
-    let coord_data_city = document.createElement('span');
-    coord_data_city.classList.add('coord');
-    coord_li.appendChild(coord_data_city);
-    coord_data_city.textContent = '['+data.coord.lat + ', ' + data.coord.lon + ']';
-    favor.appendChild(city);
-
-    load.hidden = true;
-    city.hidden = false;
+    Object.keys(mainData).forEach( key => {
+    // for (let i = 0; i < mainData.length; i++) {
+        genCityEl(mainData[key], key, favor);
+    })
 }
 
 function delCity(load, city, key) {
+    delete mainData[key]
+
     fetch('/delFavouriteCity', {
         method: 'DELETE',
         body: JSON.stringify(key),
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
     }).then(response => response.json())
         .then(json => {
-            favorites.removeItem(key);
+            delete mainData[key];
             load.remove();
             city.remove();
         })
@@ -139,44 +83,96 @@ function delCity(load, city, key) {
 
 }
 
-function fill(key, favor){
-    let data = {
-        favorites: favorites.getItem(key).toLowerCase(),
-        key: KEY
-    }
+//Функция генерации элемента
+function genCityEl(data, key, favor) {
+    const template = document.querySelector('#m-template')
 
-    fetch('/addFavourite', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    })
-    .then(response => response.json())
-    .then(json => {
-        console.log(json.success)
-        if (json.success) {
-            let data = json.res
+    var card = template.content.cloneNode(true)
 
-            genCityEl(data, key, favor)
-        } else {
-            alert(`Города ${localStorage.getItem(key)} нет в базе данных`);
-            load.remove();
-            favorites.removeItem(key);
-        }
-    })
-    // .catch(function () {
-    //     //Обрабатываем ошибки
-    // });
+    let load = card.querySelector("li.load.city");
+    load.style.display = 'none'
+
+    let city = card.querySelector("li.city:nth-child(2)");
+
+    let name = card.querySelector("h3");
+    name.innerText = data.name;
+
+    let temp = card.querySelector(".flex > p");
+    temp.innerText = data.main.temp + '°C';
+
+    let img = card.querySelector(".flex > span");
+    img.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0]['icon']}@2x.png">`;
+
+    let btn = card.querySelector("button.delete");
+
+    // Функция удаления города
+    btn.addEventListener("click", () => {
+        delCity(load, city, key)
+    }, false);
+
+
+    let wind_li = card.querySelector(".weather-li:nth-child(1)");
+    let tmp = wind_li.children[0]
+    wind_li.innerText = "Ветер";
+    wind_li.append(tmp)
+
+    let wind_data_city = card.querySelector('.wind');
+    wind_data_city.innerText = data.wind.speed + ' m/s';
+
+
+    let cloud_li = card.querySelector(".weather-li:nth-child(2)");
+    tmp = cloud_li.children[0]
+    cloud_li.innerText = "Облачность";
+    cloud_li.append(tmp)
+
+    let cloud_data_city = card.querySelector('.cloud');
+    cloud_data_city.innerText = data.clouds.all + '%';
+
+
+    let pressure_li = card.querySelector(".weather-li:nth-child(3)");
+    tmp = pressure_li.children[0]
+    pressure_li.innerText = "Давление";
+    pressure_li.append(tmp)
+
+    let pressure_data_city = card.querySelector('.pressure');
+    pressure_data_city.innerText = data.main.pressure + ' hpa';
+
+
+    let humidity_li = card.querySelector(".weather-li:nth-child(4)");
+    tmp = humidity_li.children[0]
+    humidity_li.innerText = "Влажность";
+    humidity_li.append(tmp)
+
+    let humidity_data_city = card.querySelector('.humidity');
+    humidity_data_city.innerText = data.main.humidity +'%';
+
+
+    let coord_li = card.querySelector(".weather-li:nth-child(5)");
+    tmp = coord_li.children[0]
+    coord_li.innerText = "Координаты";
+    coord_li.append(tmp)
+
+
+    let coord_data_city = card.querySelector('.coords');
+    coord_data_city.innerText = '['+data.coord.lat + ', ' + data.coord.lon + ']';
+
+    favor.append(card);
+
 
 }
 
 window.addEventListener('load', () => {
+    loadStorage()
     fetch('/getFavouriteAll', {method: 'GET'})
         .then(response => response.json())
         .then(json => {
-            let res = json.res
-            res.forEach(key => {
-                favorites.setItem(key.toLowerCase(), key);
+            let res = []
+            json.res.forEach(resSample => {
+                let data = {
+                    favorites: resSample,
+                    key: KEY
+                }
+                addFavourite(data)
             })
-            loadStorage();
         })
 })

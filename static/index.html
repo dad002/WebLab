@@ -41,7 +41,40 @@
       <input id="POST-button" type="image" name="btn" src="img/plus.png">
     </form>
 
-      <ul class="menu"></ul>
+      <ul class="menu">
+
+
+      </ul>
+
+      <template id="m-template">
+          <li class="load city">
+            <p>Подождите данные загружаются...</p>
+          </li>
+          <li class="city">
+            <div class="flex">
+              <h3></h3>
+              <p></p>
+              <span></span>
+              <button class="delete">
+                <img src="img/del2.png">
+              </button>
+            </div>
+            <ul class="weather">
+              <li class="weather-li">
+                <span class="wind"></span>
+              </li>
+
+              <li class="weather-li"><span class="cloud"></span></li>
+
+              <li class="weather-li"><span class="pressure"></span></li>
+
+              <li class="weather-li"><span class="humidity"></span></li>
+
+              <li class="weather-li"><span class="coords"></span></li>
+            </ul>
+          </li>
+        </template>
+
 
   </div>
   <script src="js/script.js"></script>

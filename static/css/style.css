@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap');
 /*---------Start of tags style*/
 body{
   color: #555555;
   max-width: 600px;
   margin-right: auto;
   margin-left: auto;
+  background: url("../img/back1.jpg") no-repeat fixed right bottom;
+  font-family: 'Gemunu Libre', sans-serif;
 }
 
 h2{
@@ -24,7 +27,6 @@ form{
 input[type="text"]{
   background-color: #e4e4e4;
   border-radius: 2px;
-  border: 0px;
   padding: 10px;
   width: 160px;
   color: black;
@@ -136,12 +138,18 @@ ul.weather{
   width: 100%;
 }
 ul.weather li{
-  list-style: none;
-  margin: 3px 0 3px 0;
   padding: 2%;
-  border-radius: 3%;
-  background-color: lightgray;
+  margin: 3px 0 3px 0;
+
+  border-radius: 2% / 33%;
+  background-color: #333333;
+  /*background: linear-gradient(to right, #222333,#907578);*/
+  /*background: linear-gradient(70deg, blue, pink);*/
+  list-style: none;
+
   color: white;
+
+  display: block;
 }
 ul.weather span{
   float: right;

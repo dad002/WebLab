@@ -19,7 +19,6 @@ function geo(){
         fetch(`/weather/city?lat=${lat}&lon=${lon}`, {method: 'GET', credentials: 'include'})
             .then(response => response.json())
             .then(json => {
-                console.log("Here")
                 createWeatherCard(json)
             })
 

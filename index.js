@@ -59,7 +59,6 @@ app.get('/weather/city/er', (req, res) => {
 app.post('/addFavourite', urlencodedParser, (req, res) => {
     let my_body = JSON.parse(Object.keys(req.body)[0])
 
-    console.log(my_body.favorites)
     let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + my_body.favorites + '&units=metric&lang=ru&appid=' + my_body.key
 
     fetch(encodeURI(url))
